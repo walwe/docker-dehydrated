@@ -1,0 +1,18 @@
+version: '3.1'
+services:
+  certs:
+    image: walwe/dehydrated
+    volumes:
+      - ./domains.txt:/dehydrated/domains.txt:ro
+      - certificates:/dehydrated/certs
+      - acme-challanges:/dehydrated/acme-challenges
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./conf.d:/etc/nginx/conf.d:ro
+      - certificates:/certs/certificates/:ro
+      - acme-challanges:/certs/acme-challenges:ro
+
+volumes:
+  certificates:
+  acme-challanges:
